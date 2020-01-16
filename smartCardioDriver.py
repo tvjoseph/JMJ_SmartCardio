@@ -31,12 +31,12 @@ sys_arguments = sys.argv
 default_cfg = ConfigParser()
 default_cfg.read(sys_arguments[2])
 
-
-print('printing the config file path',json.loads(default_cfg.get('datafiles','ecg_filepath')))
-
-
 ############## Data Loading and Processing module
 
-sl = SmartLoading()
+sl = SmartLoading(default_cfg)
 
-#print(sl.rawLoader(default_cfg))
+# Getting the edf_processing list and the information file
+
+edf_list,edfInfo = sl.rawLoader()
+print('Edf total list',len(edf_list))
+print(edfInfo.head(3))
