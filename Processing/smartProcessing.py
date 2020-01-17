@@ -55,6 +55,11 @@ class SmartLoading:
 
         return edf_list , edfInfo
 
+    def edfRead(self,edffile,edfInfo):
+        # This function takes the edf file and reads its contents based on the info file
+
+
+
 
     def rawLoader(self):
         # Getting the path for the edf files and the info file
@@ -76,6 +81,8 @@ class SmartLoading:
                 # Ensure that the details extracted about the edfile are not none . Based on the details extract the details of signal
                 if len(edfDetails) == 0:
                     continue
+                # Reading the edf signals using a new function edfRead()
+
 
 
 
