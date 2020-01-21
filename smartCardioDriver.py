@@ -37,6 +37,5 @@ sl = SmartLoading(default_cfg)
 
 # Getting the edf_processing list and the information file
 
-edf_list,edfInfo = sl.rawLoader()
-print('Edf total list',len(edf_list))
-print(edfInfo.head(3))
+sig,sigSamps = sl.rawLoader()
+print('Edf Signals read from the raw data',sigSamps.shape)
