@@ -101,42 +101,11 @@ class SmartLoading:
             sig.close()
 
 
-
-
-
-
-
     def rawLoader(self):
         # Getting the path for the edf files and the info file
         edffilePaths = list(self.config.get('datafiles','ecg_filepath').split(' '))
         edfInfofile = self.config.get('datafiles','ecg_info')
-
-        # Starting a for loop to loop over the edf files
-
-        ecg_label = []
-        ecg_data = []
-        for edffilePath in edffilePaths:
-            # Getting the completet path of the edf files and the edf file information from the function edfinfoReader()
-            edf_list, edfInfo = self.edfinfoReader(edffilePath,edfInfofile)
-            for filename in edf_list[0:1]:
-                # The below extracts the last component of the path which is the file name with extension .edf
-                baseFilename = ntpath.basename(filename)
-                # Based on the base file name extract relevant information from the information file
-                edfDetails =edfInfo.loc[edfInfo['EDF'] == baseFilename]
-                # Ensure that the details extracted about the edfile are not none . Based on the details extract the details of signal
-                if len(edfDetails) == 0:
-                    continue
-                # Reading the edf signals using a new function edfRead()
-
-                sig,sigSamps = self.edfRead(filename,edfDetails)
+        return edffilePaths,edfInfofile
 
 
-
-
-
-
-
-
-
-        return sig,sigSamps
 
