@@ -78,7 +78,7 @@ class SmartLoading:
             if (sig.sig_labels[0] in inscopeLeads or sig.sig_labels[1] in inscopeLeads):
                 # Get the total number of signal channels
                 sigNum = sig.signals_in_file
-                # Create a container for collect the signals. sig.getNsamples gives the number of singnals in each channel
+                # Create a container to collect the signals. sig.getNsamples gives the number of singnals in each channel
                 # This is given in the form [651600 651600]
                 sigSamps = np.zeros((sigNum,sig.getNSamples()[0]))
                 print('Shape of the signal dataframe',sigSamps.shape)
@@ -106,6 +106,10 @@ class SmartLoading:
         edffilePaths = list(self.config.get('datafiles','ecg_filepath').split(' '))
         edfInfofile = self.config.get('datafiles','ecg_info')
         return edffilePaths,edfInfofile
+    def annotationReader(self):
+        # This function is to read the annotation of the signals from the file
+        return None
+
 
 
 

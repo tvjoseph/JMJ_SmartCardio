@@ -12,6 +12,7 @@ from configparser import ConfigParser
 from Processing import SmartLoading
 import json
 import ntpath
+import os
 
 print('Lord bless this attempt of yours')
 
@@ -47,8 +48,9 @@ ecg_data = []
 
 ## Starting a for loop for getting all the details from the edf file
 for edffilePath in edffilePaths:
-    # Getting the completet path of the edf files and the edf file information from the function edfinfoReader()
+    # Getting the complete path of the edf files and the edf file information from the function edfinfoReader()
     edf_list, edfInfo = sl.edfinfoReader(edffilePath, edfInfofile)
+    #### @@@@ Change the list of edf_list to take all the files in the list
     for filename in edf_list[0:1]:
         # The below extracts the last component of the path which is the file name with extension .edf
         baseFilename = ntpath.basename(filename)
@@ -62,5 +64,10 @@ for edffilePath in edffilePaths:
         print('Edf Signals read from the raw data',sigSamps.shape)
         if(sig is None or sigSamps is None):
             continue
+        # Get the path of the annotations
+        annotPath = default_cfg.get('datafiles','annot_info')
+        # Get the relevant file name and add it with the file path to get the complete path of the annotation file
+        ann_file_name = annotPath + edfDetails['Annotation'].values[0]
 
+        print('annotation file path',ann_file_name)
 
