@@ -36,6 +36,7 @@ import ntpath
 import pyedflib
 import numpy as np
 import traceback
+import re
 
 
 class SmartLoading:
@@ -43,6 +44,7 @@ class SmartLoading:
     def __init__(self,configfile):
         print('Inside the smart processing module')
         self.config = configfile
+        self.beatAnots = ["N", "L", "R", "B", "A", "a", "J", "S", "e", "j", "n", "V", "r", "E", "!", "F", "/", "f", "Q", "?"]
 
     def edfinfoReader(self,edffilepath,edfInfofile):
         # This function is to read the information of the edf's from the input file
@@ -109,6 +111,38 @@ class SmartLoading:
     def annotationReader(self):
         # This function is to read the annotation of the signals from the file
         return None
+
+    def makeEcgdata(self,anot_fileName):
+
+        # Make empty containers to store the peak signal position and the annotations
+        peaks = []
+        annotations = []
+        # Read the annotation files
+        anotations =open(anot_fileName,'r')
+        anotLines = anotations.readlines()
+
+        # Checking the first record of the annotation if it is time stamp or not
+        row1 = re.split("\s+", anotLines[0])
+        if(row1[1] == 'Time'):
+            anotLines.pop(0)
+
+        # Proceeding with reading the annotations
+
+        for rows in anotLines:
+            # Splitting the signal details
+            temp = re.split("\s+", re.sub("[,\t]", " ", rows).strip())
+            # Checking if the signal details have the required number of components
+            if(len(temp) > 5):
+
+                if(temp[2] not in self.beatAnots):
+                    print('This input is a non beat annotation: {}'.format(temp[2]))
+                    continue
+                peaks.append(temp[1])
+                annotations.append(temp[2])
+
+
+        return peaks,annotations
+
 
 
 

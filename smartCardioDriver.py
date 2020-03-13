@@ -13,6 +13,7 @@ from Processing import SmartLoading
 import json
 import ntpath
 import os
+import re
 
 print('Lord bless this attempt of yours')
 
@@ -62,12 +63,21 @@ for edffilePath in edffilePaths:
         # Reading the edf signals using a new function edfRead()
         sig, sigSamps = sl.edfRead(filename, edfDetails)
         print('Edf Signals read from the raw data',sigSamps.shape)
+        print('Shape of the signals',sig)
         if(sig is None or sigSamps is None):
             continue
         # Get the path of the annotations
         annotPath = default_cfg.get('datafiles','annot_info')
         # Get the relevant file name and add it with the file path to get the complete path of the annotation file
         ann_file_name = annotPath + edfDetails['Annotation'].values[0]
+        # Get the category also
+        category = edfDetails['Category'].values[0]
+        # Getting the annotations and the annotation files
+        peaks, annotations = sl.makeEcgdata(ann_file_name)
 
-        print('annotation file path',ann_file_name)
+        print(len(peaks),len(annotations))
+        print('10 Peaks ',peaks[0:10])
+        print('10 annotations',annotations[0:10])
+
+
 
